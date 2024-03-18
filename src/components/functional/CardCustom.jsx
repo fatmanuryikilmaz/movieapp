@@ -1,22 +1,16 @@
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+import AddIcon from "@mui/icons-material/Add";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import ShareIcon from "@mui/icons-material/Share";
-import Avatar from "@mui/material/Avatar";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import { Box, Button } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
-import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
 import { useState } from "react";
-import AddIcon from "@mui/icons-material/Add";
-import { Box, Button } from "@mui/material";
-import PlayCircleIcon from "@mui/icons-material/PlayCircle";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import { Link } from "react-router-dom";
 
 const CardCustom = () => {
