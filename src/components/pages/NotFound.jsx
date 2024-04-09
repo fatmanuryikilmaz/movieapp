@@ -1,11 +1,21 @@
-import React from 'react'
+import { Box, Typography } from "@mui/material";
+import React from "react";
 
 const NotFound = () => {
   return (
-    <div>
-      <h2>404 - Not Found</h2>
-    </div>
-  )
-}
+    <Box sx={{ backgroundColor: "black", height: "100%" }}>
+      <Typography
+        variant="h1"
+        sx={{
+          fontSize: "80px",
+          color: "white",
+          margin: "100px",
+        }}
+      >
+        404 - Not Found
+      </Typography>
+    </Box>
+  );
+};
 
-export default NotFound
+export default NotFound;

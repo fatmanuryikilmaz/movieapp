@@ -1,5 +1,4 @@
 #root {
-  background-color: #000;
 }
 .App {
   text-align: center;
@@ -7,7 +6,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
+  min-height: 100vh;
+  background-color: #000;
 }
 .container {
   width: 80%;
@@ -129,4 +130,11 @@ header {
     gap: 20px;
     flex-wrap: wrap;
   }
+}
+
+.Mui-selected {
+  color: #f6be00 !important;
+}
+.MuiTabs-indicator {
+  background-color: #f6be00 !important;
 }

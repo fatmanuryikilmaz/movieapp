@@ -10,14 +10,36 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const CardCustom = () => {
+const CardCustom = ({ movieImage, movieName, genres, id, popularity }) => {
   const [expanded, setExpanded] = useState(false);
+  const [genresData, setGenresData] = useState([]);
+  useEffect(() => {
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZmE3MGEyMzliMWMwMzlkYmE4Mjk1N2I1ZTEwMmYwYSIsInN1YiI6IjY2MDA4YjJkZDM4YjU4MDE3ZDE5MmYwNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.wdv9B-pbojmolysxxbwTpGJAiYg_jSLvjMOgDAEDAc4",
+      },
+    };
+
+    fetch("https://api.themoviedb.org/3/genre/movie/list?language=en", options)
+      .then((response) => response.json())
+      .then((response) => setGenresData(response.genres))
+      .catch((err) => console.error(err));
+  }, []);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+  };
+  const [iconColor, setIconColor] = useState("#f6be00");
+  const [clicked, setClicked] = useState(false);
+  const handleClick = () => {
+    setIconColor("red");
+    setClicked(true);
   };
 
   return (
@@ -42,12 +64,25 @@ const CardCustom = () => {
           p: "0",
         }}
       >
-        <CardMedia
-          component="img"
-          sx={{ objectFit: "cover", p: "0", height: "350px" }}
-          image="https://themes.potenzaglobalsolutions.com/html/4k-star/images/movie/06.jpg"
-          alt="Movie picture"
-        />
+        <Link
+          to={"/movie-detail/" + id + "/" + movieName?.split(" ")?.join("-")}
+        >
+          <CardMedia
+            component="img"
+            sx={{
+              objectFit: "cover",
+              p: "0",
+              height: "450px",
+              overflow: "hidden",
+              "&:hover": {
+                transform: "scale(1.1)",
+                transition: "transform 0.4s ease-in-out",
+              },
+            }}
+            image={"https://image.tmdb.org/t/p/w500" + movieImage}
+            alt="Movie picture"
+          />
+        </Link>
         <Box
           sx={{
             float: "left",
@@ -80,7 +115,8 @@ const CardCustom = () => {
               },
             }}
           >
-            Horror
+            {/* {genres?.map((item) => genresData.find((x) => x.id === item).name)} */}
+            {genresData?.find((x) => x.id === genres?.at(0))?.name}
           </Button>
         </Box>
         <Box
@@ -94,13 +130,14 @@ const CardCustom = () => {
         >
           <IconButton
             sx={{
-              color: "white",
+              color: { color: clicked ? "red" : "white" },
               mr: "4px",
               fontSize: "16px",
               "&:hover": {
                 color: "#f6be00",
               },
             }}
+            onClick={handleClick}
             aria-label="FavoriteBorderIcon"
           >
             <FavoriteBorderIcon sx={{ fontSize: "16px" }} />
@@ -118,7 +155,7 @@ const CardCustom = () => {
             >
               <VisibilityOutlinedIcon sx={{ mb: "3px", fontSize: "20px" }} />
               <Typography variant="p" sx={{ ml: "4px", fontSize: "14px" }}>
-                5M
+                {String(popularity)?.split(".").at(0)}
               </Typography>
             </IconButton>
           </Box>
@@ -131,7 +168,7 @@ const CardCustom = () => {
           display: "flex",
           justifyContent: "space-between",
           position: "absolute",
-          top: 280,
+          top: 350,
           bottom: 0,
           width: "100%",
         }}
@@ -165,7 +202,7 @@ const CardCustom = () => {
           <CardContent sx={{ p: 0 }}>
             <Link to="/">
               <Typography variant="h6" sx={{ mt: "30px", fontSize: "22px" }}>
-                The Deer Hunter
+                {movieName}
               </Typography>
             </Link>
           </CardContent>

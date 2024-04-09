@@ -15,6 +15,8 @@ import AdbIcon from "@mui/icons-material/Adb";
 import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import MenuItemCustom from "./MenuItemCustom";
+import { Link } from "react-router-dom";
+import SearchInput from "./SearchInput";
 
 const pages = [
   { name: "Products", items: ["card", "deli"] },
@@ -42,6 +44,11 @@ const NavBar = () => {
     setAnchorElUser(null);
   };
 
+  const [searchIsActive, setSearchIsActive] = useState(false);
+  const searchInputToggle = () => {
+    setSearchIsActive(!searchIsActive);
+  };
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -62,14 +69,19 @@ const NavBar = () => {
               margin: "15px",
             }}
           >
-            <img
-              src="/images/film-reel-home-feist-electronicsfeist-electronics-22.png"
-              alt="logo"
-              height={40}
-            />
-            <Typography variant="span" sx={{ ml: 4, mt: 1.4, mb: 0 }}>
-              Movie
-            </Typography>
+            <Link to="/">
+              <img
+                src="/images/film-reel-home-feist-electronicsfeist-electronics-22.png"
+                alt="logo"
+                height={40}
+              />
+              <Typography
+                variant="span"
+                sx={{ ml: 4, mt: 1.4, mb: 0, fontSize: "26px" }}
+              >
+                Movie
+              </Typography>
+            </Link>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -130,14 +142,16 @@ const NavBar = () => {
               textDecoration: "none",
             }}
           >
-            <img
-              src="/images/film-reel-home-feist-electronicsfeist-electronics-22.png"
-              alt="logo"
-              height={40}
-            />
-            <Typography variant="span" sx={{ ml: 4, mt: 1.4, mb: 0 }}>
-              Movie
-            </Typography>
+            <Link to="/">
+              <img
+                src="/images/film-reel-home-feist-electronicsfeist-electronics-22.png"
+                alt="logo"
+                height={40}
+              />
+              <Typography variant="span" sx={{ ml: 4, mt: 1.4, mb: 0 }}>
+                Movie
+              </Typography>
+            </Link>
           </Typography>
           <Box
             sx={{
@@ -169,7 +183,12 @@ const NavBar = () => {
               mr: { md: 2 },
             }}
           >
-            <SearchOutlinedIcon sx={{ fontSize: 25, mt: 0.5 }} />
+            {searchIsActive && <SearchInput />}
+
+            <SearchOutlinedIcon
+              sx={{ fontSize: 25, mt: 0.5 }}
+              onClick={searchInputToggle}
+            />
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
