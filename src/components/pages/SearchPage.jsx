@@ -28,8 +28,14 @@ const SearchPage = () => {
       .catch((err) => console.error(err));
   }, [searchText]);
   return (
-    <Box>
-      {searchText}
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        flexWrap: "wrap",
+      }}
+    >
+      {searchData.length === 0 && <div>No results found</div>}
       {searchData?.map((data) => (
         <CardCustom
           genres={data.genre_ids}

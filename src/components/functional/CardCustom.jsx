@@ -74,6 +74,7 @@ const CardCustom = ({ movieImage, movieName, genres, id, popularity }) => {
               p: "0",
               height: "450px",
               overflow: "hidden",
+              minWidth: { xs: 200, md: 300 },
               "&:hover": {
                 transform: "scale(1.1)",
                 transition: "transform 0.4s ease-in-out",

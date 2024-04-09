@@ -14,10 +14,44 @@ const SearchInput = () => {
   return (
     <form onSubmit={handleSubmit}>
       <TextField
-        label="Outlined"
+        label="Search Movie"
         variant="outlined"
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
+        InputLabelProps={{ shrink: true }}
+        sx={{
+          height: "16px",
+          paddingBottom: "5px",
+          ".MuiInputBase-input": {
+            color: "white !important",
+          },
+          "& label": {
+            color: "white",
+          },
+          "& label.Mui-focused": {
+            color: "white",
+          },
+          "& .MuiInput-underline:after": {
+            borderBottomColor: "#f6be00",
+          },
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+              borderColor: "#f6be00",
+            },
+            "&:hover fieldset": {
+              borderColor: "#f6be00",
+            },
+            "&.Mui-focused fieldset": {
+              borderColor: "#f6be00",
+            },
+            "&.MuiInputBase-root": {
+              height: "35px",
+            },
+            "&.MuiFormLabel-root": {
+              bottom: "200px",
+            },
+          },
+        }}
       />
     </form>
   );
