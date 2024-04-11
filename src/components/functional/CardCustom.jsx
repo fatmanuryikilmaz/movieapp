@@ -16,6 +16,9 @@ import { Link } from "react-router-dom";
 const CardCustom = ({ movieImage, movieName, genres, id, popularity }) => {
   const [expanded, setExpanded] = useState(false);
   const [genresData, setGenresData] = useState([]);
+  const [iconColor, setIconColor] = useState("#f6be00");
+  const [clicked, setClicked] = useState(false);
+
   useEffect(() => {
     const options = {
       method: "GET",
@@ -35,8 +38,7 @@ const CardCustom = ({ movieImage, movieName, genres, id, popularity }) => {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  const [iconColor, setIconColor] = useState("#f6be00");
-  const [clicked, setClicked] = useState(false);
+
   const handleClick = () => {
     setIconColor("red");
     setClicked(true);

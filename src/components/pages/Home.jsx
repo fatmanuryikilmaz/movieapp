@@ -4,9 +4,18 @@ import "slick-carousel/slick/slick.css";
 import SliderCards from "../functional/SliderCards";
 import CardCustom from "../functional/CardCustom";
 import { Box } from "@mui/material";
+import SliderCategories from "../functional/SliderCategories";
+import Pagination from "@mui/material/Pagination";
 
 const Home = () => {
   const [movieData, setMovieData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [pageCount, setPageCount] = useState(0);
+
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
+
   useEffect(() => {
     const options = {
       method: "GET",
@@ -18,16 +27,21 @@ const Home = () => {
     };
 
     fetch(
-      "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc",
+      `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc`,
       options
     )
       .then((response) => response.json())
-      .then((response) => setMovieData(response.results))
+      .then((response) => {
+        setMovieData(response.results);
+        setPageCount(response.total_pages);
+      })
       .catch((err) => console.error(err));
-  }, []);
+  }, [page]);
   return (
     <div className="container">
       <SliderCards />
+      <SliderCategories />
+
       <Box
         sx={{
           display: "flex",
@@ -47,6 +61,21 @@ const Home = () => {
             />
           );
         })}
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          mb: "15px",
+        }}
+      >
+        <Pagination
+          count={pageCount}
+          page={page}
+          onChange={handleChange}
+          sx={{ "& .MuiPaginationItem-root ": { color: "#fff" } }}
+        />
       </Box>
     </div>
   );

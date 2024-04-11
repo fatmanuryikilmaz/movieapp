@@ -1,16 +1,16 @@
 import React from "react";
-import { useParams } from "react-router-dom";
-import { Box } from "@mui/material";
-import { useState } from "react";
 import { useEffect } from "react";
-import CardCustom from "../functional/CardCustom";
+import { useState } from "react";
 import Pagination from "@mui/material/Pagination";
+import { Box } from "@mui/material";
+import CardCustom from "../functional/CardCustom";
+import { useParams } from "react-router-dom";
 
-const SearchPage = () => {
-  const { searchText } = useParams();
+const CategoryPage = () => {
+  const [categoryData, setCategoryData] = useState([]);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
-  const [searchData, setsearchData] = useState([]);
+  const { id } = useParams();
 
   const handleChange = (event, value) => {
     setPage(value);
@@ -27,40 +27,37 @@ const SearchPage = () => {
     };
 
     fetch(
-      `https://api.themoviedb.org/3/search/movie?query=${searchText}&include_adult=false&language=en-US&page=${page}`,
+      `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc&with_genres=${id}`,
       options
     )
       .then((response) => response.json())
       .then((response) => {
+        setCategoryData(response.results);
         setPageCount(response.total_pages);
-        setsearchData(response.results);
       })
       .catch((err) => console.error(err));
-  }, [searchText, page]);
-
-  useEffect(() => {
-    setPage(1);
-  }, [searchText]);
-
+  }, [id, page]);
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        flexWrap: "wrap",
-      }}
-    >
-      {searchData.length === 0 && <div>No results found</div>}
-      {searchData?.map((data) => (
-        <CardCustom
-          genres={data.genre_ids}
-          id={data.id}
-          movieImage={data.poster_path}
-          movieName={data.original_title}
-          popularity={data.popularity}
-          key={data.id}
-        />
-      ))}
+    <div className="container">
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          flexWrap: "wrap",
+        }}
+      >
+        {categoryData.length === 0 && <div>No results found</div>}
+        {categoryData?.map((data) => (
+          <CardCustom
+            genres={data.genre_ids}
+            movieImage={data.poster_path}
+            movieName={data.original_title}
+            id={data.id}
+            popularity={data.popularity}
+            key={data.id}
+          />
+        ))}
+      </Box>
       <Box
         sx={{
           display: "flex",
@@ -76,8 +73,8 @@ const SearchPage = () => {
           sx={{ "& .MuiPaginationItem-root ": { color: "#fff" } }}
         />
       </Box>
-    </Box>
+    </div>
   );
 };
 
-export default SearchPage;
+export default CategoryPage;
